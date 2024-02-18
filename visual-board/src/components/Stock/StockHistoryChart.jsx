@@ -133,7 +133,7 @@ function StockHistoryChart({ ticker, period }) {
           </Typography>
         </Grid>
 
-        <Grid item xs mt={5}>
+        <Grid item xs>
           <Grid container direction="row" alignItems="center" height="100%">
             <Grid item>
               <Box
