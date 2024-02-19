@@ -203,7 +203,7 @@ function StockInfoList({ ticker }) {
                 .split("_")
                 .join(" ")
                 .toUpperCase()}
-              // secondary="Rec. Key"
+              secondary="Recommendation"
               primaryTypographyProps={{
                 fontWeight: "bold",
               }}
