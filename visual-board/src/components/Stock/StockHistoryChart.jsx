@@ -16,6 +16,8 @@ import Slider from "@mui/material/Slider";
 import CircularProgress from "@mui/material/CircularProgress";
 
 function StockHistoryChart({ ticker, period }) {
+  const [fetching, setFetching] = useState(false);
+
   const [title, setTitle] = useState(null);
   const [history, setHistory] = useState(null);
   const [statistics, setStatistics] = useState(null);
@@ -47,6 +49,7 @@ function StockHistoryChart({ ticker, period }) {
 
   useEffect(() => {
     const fetchData = async () => {
+      setFetching(true);
       getStockHistory(ticker, period)
         .then((res) => {
           const { data, statistics } = res;
@@ -77,6 +80,7 @@ function StockHistoryChart({ ticker, period }) {
             lines.Volume = true;
 
             setLines(lines);
+            setFetching(false);
           }
         })
         .catch((e) => console.log(e));
@@ -124,15 +128,26 @@ function StockHistoryChart({ ticker, period }) {
       ));
   }, [statistics, lines]);
 
-  if (history) {
-    return (
-      <Grid container direction="column" height="100%">
-        <Grid item>
+  return (
+    <Grid container direction="column" height="100%">
+      <Grid item>
+        {fetching && !history ? (
+          <Box
+            height="30vh"
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <CircularProgress color="inherit" />
+          </Box>
+        ) : (
           <Typography variant="h3" sx={{ fontWeight: "bolder" }}>
             {title}
           </Typography>
-        </Grid>
+        )}
+      </Grid>
 
+      {history && (
         <Grid item xs>
           <Grid container direction="row" alignItems="center" height="100%">
             <Grid item>
@@ -264,9 +279,9 @@ function StockHistoryChart({ ticker, period }) {
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
-    );
-  }
+      )}
+    </Grid>
+  );
 }
 
 export default StockHistoryChart;

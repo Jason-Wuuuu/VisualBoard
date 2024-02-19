@@ -4,15 +4,22 @@ import { getStockRecommendations } from "../../stock";
 
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
+
 import { BarChart } from "@mui/x-charts/BarChart";
 
 function StockRecommendationsChart({ ticker }) {
+  const [fetching, setFetching] = useState(false);
+
   const [recommendations, setRecommendations] = useState(null);
   useEffect(() => {
     const fetchData = async () => {
+      setFetching(true);
       getStockRecommendations(ticker)
         .then((data) => {
           setRecommendations(data);
+          setFetching(false);
         })
         .catch((e) => console.log(e));
     };
@@ -20,21 +27,32 @@ function StockRecommendationsChart({ ticker }) {
     if (ticker) fetchData();
   }, [ticker]);
 
-  if (recommendations) {
-    return (
-      <Grid
-        container
-        direction="column"
-        display="flex"
-        alignItems="center"
-        height="100%"
-      >
-        <Grid item>
+  return (
+    <Grid
+      container
+      direction="column"
+      display="flex"
+      alignItems="center"
+      height="100%"
+    >
+      <Grid item>
+        {fetching && !recommendations ? (
+          <Box
+            height="20vh"
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <CircularProgress color="inherit" />
+          </Box>
+        ) : (
           <Typography align="center" variant="h5" sx={{ fontWeight: "bold" }}>
             Recommendations
           </Typography>
-        </Grid>
+        )}
+      </Grid>
 
+      {recommendations && (
         <Grid item width={"80%"} mt={1}>
           <BarChart
             height={150}
@@ -59,9 +77,9 @@ function StockRecommendationsChart({ ticker }) {
             }}
           />
         </Grid>
-      </Grid>
-    );
-  }
+      )}
+    </Grid>
+  );
 }
 
 export default StockRecommendationsChart;
