@@ -17,6 +17,7 @@ An interactive stock visualization dashboard providing real-time and historical 
 
 ### Planned Features
 
+- [ ] Integrate my [LSTM stock price prediction model](https://github.com/Jason-Wuuuu/stock_price_prediction) to provide forecasted market trends.
 - [ ] Add live functionality during trading hours:
   - [ ] Establish WebSocket connection for live data streaming.
   - [ ] Implement frontend components to display live data.
