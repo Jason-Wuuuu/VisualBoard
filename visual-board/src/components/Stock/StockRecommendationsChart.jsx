@@ -55,19 +55,40 @@ function StockRecommendationsChart({ ticker }) {
       {recommendations && (
         <Grid item width={"80%"} mt={1}>
           <BarChart
-            height={150}
-            dataset={recommendations.slice(0, -1)}
+            height={200}
+            dataset={recommendations}
             xAxis={[{ scaleType: "band", dataKey: "period" }]}
             series={[
               {
+                dataKey: "strongBuy",
+                label: "Strong Buy",
+                // stack: "buy",
+                highlightScope: { highlighted: "series", faded: "global" },
+              },
+              {
                 dataKey: "buy",
                 label: "Buy",
-                // highlightScope: { highlighted: "series", faded: "global" },
+                // stack: "buy",
+                highlightScope: { highlighted: "series", faded: "global" },
               },
-              { dataKey: "hold", label: "Hold" },
-              { dataKey: "sell", label: "Sell" },
-              { dataKey: "strongBuy", label: "Strong Buy" },
-              { dataKey: "strongSell", label: "Strong Sell" },
+              {
+                dataKey: "hold",
+                label: "Hold",
+                // stack: "hold",
+                highlightScope: { highlighted: "series", faded: "global" },
+              },
+              {
+                dataKey: "sell",
+                label: "Sell",
+                // stack: "sell",
+                highlightScope: { highlighted: "series", faded: "global" },
+              },
+              {
+                dataKey: "strongSell",
+                label: "Strong Sell",
+                // stack: "sell",
+                highlightScope: { highlighted: "series", faded: "global" },
+              },
             ]}
             slotProps={{
               legend: {

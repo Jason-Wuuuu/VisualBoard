@@ -70,9 +70,6 @@ async def get_stock_history(ticker: str, interval: str = "1d", period: str = "1m
 
             history = history.drop(LINES_TO_DROP, axis=1).reset_index()
 
-            history["Volume"] = (history["Volume"] - history["Volume"].min()) / \
-                (history["Volume"].max() - history["Volume"].min())
-
             close_mean = round(history['Close'].mean(), 2)
             close_median = round(history['Close'].median(), 2)
 

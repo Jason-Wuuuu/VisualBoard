@@ -3,6 +3,7 @@ import { useState, useEffect, useMemo } from "react";
 import { getStockHistory } from "../../stock";
 
 import { LineChart } from "@mui/x-charts/LineChart";
+import { BarChart } from "@mui/x-charts/BarChart";
 import { ChartsReferenceLine } from "@mui/x-charts";
 
 import Box from "@mui/material/Box";
@@ -44,7 +45,7 @@ function StockHistoryChart({ ticker, period }) {
   const labelFormat = {
     // year: "2-digit",
     month: "short",
-    day: "numeric",
+    day: "2-digit",
   };
 
   useEffect(() => {
@@ -56,7 +57,15 @@ function StockHistoryChart({ ticker, period }) {
 
           const processedData = {};
           Object.keys(data).map((key) => {
-            processedData[key] = Object.values(data[key]);
+            let value = Object.values(data[key]);
+
+            if (key === "Date") {
+              for (const ts in value) {
+                value[ts] = new Date(value[ts]);
+              }
+            }
+
+            processedData[key] = value;
           });
 
           setHistory(processedData);
@@ -119,7 +128,6 @@ function StockHistoryChart({ ticker, period }) {
           y={statistics[key]}
           label={`${key}(${statistics[key]})`}
           lineStyle={{
-            stroke: "snow",
             strokeWidth: 1,
             strokeDasharray: 5,
           }}
@@ -201,15 +209,11 @@ function StockHistoryChart({ ticker, period }) {
                     xAxis={[
                       {
                         data: history["Date"],
-                        // scaleType: "point", // "utc"
-                        valueFormatter: (ts) =>
-                          new Intl.DateTimeFormat(
-                            "en-US",
-                            period === "1d" ? labelFormat_1d : labelFormat
-                          ).format(new Date(parseInt(ts))),
+                        scaleType: "time",
                         tickLabelStyle: {
-                          angle: 45,
-                          textAnchor: "start",
+                          // angle: 45,
+                          // textAnchor: "start",
+                          fontSize: 10,
                         },
                       },
                     ]}
@@ -221,8 +225,8 @@ function StockHistoryChart({ ticker, period }) {
                     height={parseInt(height)}
                     slotProps={{
                       legend: {
-                        itemMarkWidth: 15,
-                        itemMarkHeight: 15,
+                        itemMarkWidth: 10,
+                        itemMarkHeight: 10,
                       },
                     }}
                   >
@@ -232,44 +236,38 @@ function StockHistoryChart({ ticker, period }) {
 
                 <Collapse in={lines["Volume"]} timeout={500}>
                   <Grid item>
-                    <LineChart
+                    <BarChart
+                      skipAnimation
                       height={150}
-                      disableLineItemHighlight
-                      disableAxisListener
-                      axisHighlight={{
-                        x: "none",
-                        y: "none",
-                      }}
+                      leftAxis={null}
+                      // bottomAxis={null}
                       xAxis={[
                         {
                           data: history["Date"],
-                          // scaleType: "point", // "utc"
+                          scaleType: "band",
                           valueFormatter: (ts) =>
                             new Intl.DateTimeFormat(
                               "en-US",
                               period === "1d" ? labelFormat_1d : labelFormat
-                            ).format(new Date(parseInt(ts))),
+                            ).format(ts),
                           tickLabelStyle: {
-                            angle: 45,
-                            textAnchor: "start",
-                            // fontSize: 12,
+                            fontSize: 10,
                           },
+                          label: "Volume",
                         },
                       ]}
                       series={[
                         {
                           data: history["Volume"],
-                          showMark: false,
-                          label: "Volume(Normalized)",
-                          curve: "linear",
+                          label: "Volume",
                           color: "snow",
                         },
                       ]}
                       slotProps={{
                         legend: {
-                          // hidden: true,
-                          itemMarkWidth: 15,
-                          itemMarkHeight: 15,
+                          hidden: true,
+                          itemMarkWidth: 10,
+                          itemMarkHeight: 10,
                         },
                       }}
                     />
