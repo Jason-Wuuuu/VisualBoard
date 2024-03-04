@@ -1,8 +1,5 @@
 # Visual Board
-
-# Stock Dashboard Web App
-
-An interactive stock visualization dashboard providing real-time and historical stock data analysis.
+An interactive data visualization / dashboard.
 
 ## Features
 
