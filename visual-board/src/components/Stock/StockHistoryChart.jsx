@@ -254,6 +254,9 @@ function StockHistoryChart({ ticker, period }) {
                             fontSize: 10,
                           },
                           label: "Volume",
+                          labelStyle: {
+                            fontWeight: "bold",
+                          },
                         },
                       ]}
                       series={[
