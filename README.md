@@ -10,6 +10,7 @@ An interactive data visualization / dashboard.
 ## Features
 
 ### Completed Features
+
 - [x] Interactive stock price chart with historical data visualization, market recommendations and stock analysis tools.
 - [x] Integration with Material-UI for a cohesive layout and responsive design.
 - [x] Real-time stock data fetching using yfinance.
@@ -18,6 +19,7 @@ An interactive data visualization / dashboard.
 - [x] Backend response time optimization with Redis caching.
 
 ### Planned Features
+
 - [ ] Integrate [LSTM stock price prediction model](https://github.com/Jason-Wuuuu/stock_price_prediction) to provide forecasted market trends.
 - [ ] Add live functionality during trading hours:
   - [ ] Establish WebSocket connection for live data streaming.
@@ -44,16 +46,53 @@ Before you begin, ensure you have the following installed:
 ### Backend Setup
 
 1. Navigate to the server directory:
+
    ```
    cd server
    ```
 
-2. Start Redis server:
+2. Create a virtual environment:
+
+   ```
+   python -m venv venv
+   ```
+
+3. Activate the virtual environment:
+
+   On Windows:
+
+   ```
+   venv\Scripts\activate
+   ```
+
+   On macOS and Linux:
+
+   ```
+   source venv/bin/activate
+   ```
+
+4. Install the required Python packages:
+
+   Using pip:
+
+   ```
+   pip install -r requirements.txt
+   ```
+
+   Or using conda:
+
+   ```
+   conda create --name visualboard --file requirements.txt
+   conda activate visualboard
+   ```
+
+5. Start Redis server:
+
    ```
    redis-server
    ```
 
-3. Start the FastAPI server:
+6. Start the FastAPI server:
    ```
    uvicorn main:app --reload
    ```
@@ -63,11 +102,13 @@ The backend server should now be running on `http://localhost:8000`.
 ### Frontend Setup
 
 1. Navigate to the frontend directory:
+
    ```
    cd visual-board
    ```
 
 2. Install dependencies:
+
    ```
    npm install
    ```

@@ -1,2 +1,12 @@
-/.DS_Store
-/dump.rdb
+# System files
+.DS_Store
+.DS_Store server
+
+# Database files
+dump.rdb
+dump.rdb server
+
+# Python files
+*.pyc
+main.cpython-312.pyc
+venv/
